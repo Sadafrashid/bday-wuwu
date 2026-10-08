@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Okay... I made something.</title>
+  <meta name="description" content="A small private thing, made at night.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0a0608">
+
+  <!-- Fonts are optional: if you're offline, the site falls back to elegant system fonts. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="scrapbook.css">
+</head>
+
+<body class="is-locked">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="d-heart" viewBox="0 0 40 36"><path d="M20 33C9 25 3 19 3 12.5 3 7.6 6.700 4 11.200 4c3.700 0 6.700 2.200 8.800 5.600C22.100 6.200 25.100 4 28.800 4 33.300 4 37 7.600 37 12.500 37 19 31 25 20 33z" fill="none" stroke="currentColor" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="d-star" viewBox="0 0 40 40"><path d="M20 4l3.400 11.200L35 16.600l-9.200 7 3.400 11.400L20 28.400 10.800 35l3.400-11.400-9.200-7 11.600-1.400z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="d-arrow" viewBox="0 0 80 50"><path d="M4 8c22-6 52-2 62 26M66 34l-12-3M66 34l3-13" fill="none" stroke="currentColor" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="d-spark" viewBox="0 0 30 30"><path d="M15 3v24M3 15h24M7 7l16 16M23 7L7 23" stroke="currentColor" stroke-width="1.800" stroke-linecap="round"/></symbol>
+  </svg>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="scrollbar" aria-hidden="true"><span id="scrollFill"></span></div>
+
+  <noscript>
+    <p style="padding:2rem;text-align:center;color:#f4eadd;background:#0a0608;position:fixed;inset:0;z-index:999">
+      This little surprise needs JavaScript switched on. Please enable it and refresh.
+    </p>
+  </noscript>
+
+  <!-- ============ 0. THE OPENING ============ -->
+  <section class="intro" id="intro" aria-live="polite">
+    <div class="intro__inner">
+      <p class="intro__line" data-cfg="intro.lines.0"></p>
+      <p class="intro__line" data-cfg="intro.lines.1"></p>
+      <p class="intro__line" data-cfg="intro.lines.2"></p>
+      <button class="btn intro__btn" id="openBtn" type="button" data-cfg="intro.button"></button>
+    </div>
+  </section>
+
+  <main class="site" id="site" inert>
+
+    <!-- ============ 1. HERO ============ -->
+    <section class="hero" id="hero">
+      <div class="hero__glow hero__glow--a" data-parallax="-.07" data-parallax-max="90"></div>
+      <div class="hero__glow hero__glow--b" data-parallax=".09" data-parallax-max="90"></div>
+      <canvas class="hero__dust" id="dust" aria-hidden="true"></canvas>
+
+      <div class="collage" aria-hidden="true">
+        <figure class="pol pol--1" style="--i:0" data-parallax="-.05" data-parallax-max="40"><img src="assets/images/photo8.jpg" alt="" onerror="this.parentNode.hidden=true"><i class="tape"></i></figure>
+        <figure class="pol pol--2" style="--i:1" data-parallax=".06" data-parallax-max="40"><img src="assets/images/photo9.jpg" alt="" onerror="this.parentNode.hidden=true"><i class="tape"></i></figure>
+        <figure class="pol pol--3" style="--i:2" data-parallax="-.08" data-parallax-max="50"><img src="assets/images/photo1.jpg" alt="" onerror="this.parentNode.hidden=true"><i class="tape"></i></figure>
+        <figure class="pol pol--4" style="--i:3" data-parallax=".05" data-parallax-max="40"><img src="assets/images/photo7.jpg" alt="" onerror="this.parentNode.hidden=true"><i class="tape"></i></figure>
+        <figure class="pol pol--5" style="--i:4" data-parallax="-.04" data-parallax-max="30"><img src="assets/images/photo2.jpg" alt="" onerror="this.parentNode.hidden=true"><i class="tape"></i></figure>
+        <svg class="doodle dd-1"><use href="#d-heart"/></svg>
+        <svg class="doodle dd-2"><use href="#d-star"/></svg>
+        <svg class="doodle dd-3"><use href="#d-arrow"/></svg>
+        <svg class="doodle dd-4"><use href="#d-spark"/></svg>
+        <svg class="doodle dd-5"><use href="#d-heart"/></svg>
+      </div>
+
+      <div class="hero__inner" data-parallax="-.16" data-parallax-max="120">
+        <h1 class="hero__title">
+          <span class="hero__hb reveal" data-cfg="copy.hero.title" style="--d:.9s"></span>
+          <span class="hero__name reveal" id="heroName" style="--d:1.7s"></span>
+        </h1>
+        <p class="hero__line reveal" data-cfg="copy.hero.line1" style="--d:3.1s"></p>
+        <p class="hero__sub reveal" data-cfg="copy.hero.line2" style="--d:4.6s"></p>
+      </div>
+
+      <a class="hero__cue reveal" href="#message" style="--d:6s">
+        <span data-cfg="copy.hero.cue"></span><i aria-hidden="true"></i>
+      </a>
+    </section>
+
+    <!-- ============ 2. PERSONAL MESSAGE ============ -->
+    <section class="section message" id="message">
+      <div class="wrap wrap--narrow">
+        <h2 class="h2 reveal" data-cfg="copy.message.heading"></h2>
+        <div class="prose" id="messageBody"></div>
+      </div>
+    </section>
+
+    <!-- ============ 3. YOU, IN MY WORDS ============ -->
+    <section class="section" id="you">
+      <div class="wrap">
+        <header class="head reveal">
+          <p class="eyebrow" data-cfg="copy.personality.eyebrow"></p>
+          <h2 class="h2" data-cfg="copy.personality.heading"></h2>
+          <p class="head__hint" data-cfg="copy.personality.hint"></p>
+        </header>
+        <div class="pgrid" id="pgrid"></div>
+        <p class="pdone" id="pdone" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- ============ 4. EVIDENCE (THE TWO REELS) ============ -->
+    <section class="section evidence" id="evidence">
+      <div class="wrap">
+        <header class="head head--center reveal">
+          <p class="eyebrow" data-cfg="copy.evidence.eyebrow"></p>
+          <h2 class="h2" data-cfg="copy.evidence.heading"></h2>
+          <p class="head__hint" data-cfg="copy.evidence.lead"></p>
+        </header>
+
+        <div id="reel1Mount"></div>
+
+        <p class="evidence__ps reveal" data-cfg="copy.evidence.ps"></p>
+      </div>
+    </section>
+
+    <!-- ============ 5. PHOTO DIARY ============ -->
+    <section class="section gallery" id="gallery">
+      <div class="wrap">
+        <header class="head reveal">
+          <p class="eyebrow" data-cfg="copy.gallery.eyebrow"></p>
+          <h2 class="h2" data-cfg="copy.gallery.heading"></h2>
+          <p class="head__hint" data-cfg="copy.gallery.hint"></p>
+        </header>
+        <div class="diary" id="diary"></div>
+      </div>
+    </section>
+
+    <!-- ============ 6. OUR STORY ============ -->
+    <section class="section story" id="story">
+      <div class="wrap">
+        <header class="head head--center reveal">
+          <p class="eyebrow" data-cfg="copy.story.eyebrow"></p>
+          <h2 class="h2" data-cfg="copy.story.heading"></h2>
+        </header>
+        <div class="timeline" id="timeline">
+          <span class="timeline__rail" aria-hidden="true"><span class="timeline__fill"></span></span>
+          <ol class="timeline__list" id="timelineList"></ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 7. THE "I KNOW YOU" GAME ============ -->
+    <section class="section quiz" id="quiz">
+      <div class="wrap wrap--narrow">
+        <header class="head head--center reveal">
+          <p class="eyebrow" data-cfg="copy.quiz.eyebrow"></p>
+          <h2 class="h2" data-cfg="copy.quiz.heading"></h2>
+          <p class="head__hint" data-cfg="copy.quiz.sub"></p>
+        </header>
+        <div id="quizMount" class="reveal"></div>
+      </div>
+    </section>
+
+    <!-- ============ 8. THINGS I DON'T SAY ENOUGH ============ -->
+    <section class="section unsaid" id="unsaid">
+      <div class="wrap wrap--narrow">
+        <header class="head reveal">
+          <p class="eyebrow" data-cfg="copy.unsaid.eyebrow"></p>
+          <h2 class="h2" data-cfg="copy.unsaid.heading"></h2>
+        </header>
+        <div class="unsaid__list" id="unsaidList"></div>
+      </div>
+    </section>
+
+    <!-- ============ 9. THE LETTER ============ -->
+    <section class="section letter" id="letter">
+      <div class="wrap wrap--narrow">
+        <p class="letter__pre reveal" data-cfg="letter.pre"></p>
+
+        <div class="letter__stage" id="letterStage">
+          <div class="env-wrap reveal" id="envWrap">
+            <div class="env" id="env" aria-hidden="true">
+              <div class="env__back"></div>
+              <div class="env__paper"></div>
+              <div class="env__front"></div>
+              <div class="env__flap"></div>
+              <div class="env__seal"><span id="sealLetter"></span></div>
+            </div>
+            <button class="btn btn--solid letter__btn" id="letterBtn" type="button" data-cfg="letter.button"></button>
+          </div>
+
+          <article class="paper" id="paper" hidden>
+            <p class="paper__greet reveal" id="paperGreet"></p>
+            <div class="paper__body" id="paperBody"></div>
+            <p class="paper__close reveal" id="paperClose"></p>
+            <p class="paper__sig reveal" id="paperSig"></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 10. THE FINAL BUILD-UP ============ -->
+    <section class="buildup" id="buildup">
+      <div class="buildup__inner">
+        <div id="buLines"></div>
+        <button class="btn btn--solid bu__btn" id="forYou" type="button" data-cfg="buildup.button"></button>
+      </div>
+    </section>
+
+    <!-- ============ 11-13. THE REVEAL, FINAL MESSAGE, SECRET (unlocked by the button above) ============ -->
+    <div id="finale" hidden>
+
+      <section class="rv" id="reveal">
+        <div class="rv__glow" aria-hidden="true"></div>
+        <canvas class="rv__canvas" id="celebrate" aria-hidden="true"></canvas>
+        <div class="frags" id="frags" aria-hidden="true"></div>
+
+        <div class="rv__inner">
+          <p class="rv__a" id="rvA"></p>
+          <h2 class="rv__name" id="rvName"></h2>
+          <p class="rv__b" id="rvB"></p>
+        </div>
+
+        <button class="rv__replay" id="replay" type="button" data-cfg="reveal.replay"></button>
+        <a class="rv__cue" id="rvCue" href="#closing" aria-label="Keep scrolling"><i aria-hidden="true"></i></a>
+      </section>
+
+      <section class="closing" id="closing">
+        <div class="wrap wrap--narrow closing__inner" id="closingInner"></div>
+      </section>
+
+      <section class="secret" id="secret">
+        <div class="wrap wrap--narrow">
+          <button class="secret__teaser" id="secretBtn" type="button" aria-expanded="false" aria-controls="secretBody"></button>
+          <div class="secret__body" id="secretBody"><div class="secret__inner" id="secretInner"></div></div>
+        </div>
+      </section>
+
+      <footer class="foot"><p data-cfg="copy.footer"></p></footer>
+    </div>
+  </main>
+
+  <!-- ============ OVERLAYS ============ -->
+  <button class="music" id="musicBtn" type="button" data-state="idle" aria-label="Play music" aria-pressed="false">
+    <span class="music__hint" id="musicHint"></span>
+    <svg class="music__icon music__icon--idle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+    <span class="music__label"><svg class="music__heart"><use href="#d-heart"/></svg><b>our song</b></span>
+    <span class="music__bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+    <svg class="music__icon music__icon--paused" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg>
+  </button>
+  <button class="music-mute" id="musicMute" type="button" aria-label="Mute music" aria-pressed="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.500v5h3.600L12.500 19V5L7.600 9.500H4z"/><path class="mm-on" d="M16 9a4.200 4.200 0 0 1 0 6M18.600 6.400a8 8 0 0 1 0 11.200"/><path class="mm-off" d="M16.500 9.500l4 5M20.500 9.500l-4 5"/></svg>
+  </button>
+  <audio id="song" preload="none" loop></audio>
+
+  <div class="lb" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <button class="lb__close" id="lbClose" type="button" aria-label="Close photo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <button class="lb__nav lb__nav--prev" id="lbPrev" type="button" aria-label="Previous photo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <button class="lb__nav lb__nav--next" id="lbNext" type="button" aria-label="Next photo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+    </button>
+    <figure class="lb__fig">
+      <div class="lb__media" id="lbMedia"></div>
+      <figcaption class="lb__cap" id="lbCap"></figcaption>
+    </figure>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
