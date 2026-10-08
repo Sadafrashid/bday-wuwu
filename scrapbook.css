@@ -1,0 +1,268 @@
+/* =========================================================
+   SCRAPBOOK LAYER: the visual redesign.
+   Loads after style.css and only restyles; all content,
+   markup hooks and behaviour come from the original files.
+   Palette: charcoal · chocolate · burgundy · cream · peach · amber
+   ========================================================= */
+
+:root {
+  --bg: #0e0907;
+  --bg-soft: #17100b;
+  --bg-card: #1d130e;
+  --ivory: #f3e6d0;
+  --ivory-dim: rgba(243, 230, 208, .78);
+  --ivory-faint: rgba(243, 230, 208, .5);
+  --rose: #dba58f;
+  --rose-soft: rgba(219, 165, 143, .2);
+  --wine: #5c1f2b;
+  --gold: #d6a65f;
+  --gold-soft: rgba(214, 166, 95, .22);
+  --line: rgba(243, 230, 208, .13);
+
+  --paper: #efe0c8;
+  --ink: #3a2420;
+  --ink-rose: #7a2f3b;
+  --tape: rgba(214, 166, 95, .55);
+  --tape-rose: rgba(219, 165, 143, .6);
+
+  --heart-fill: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 36'%3E%3Cpath d='M20 33C9 25 3 19 3 12.5 3 7.6 6.7 4 11.2 4c3.7 0 6.700 2.200 8.800 5.600C22.100 6.200 25.100 4 28.800 4 33.300 4 37 7.600 37 12.500 37 19 31 25 20 33z' fill='%23000'/%3E%3C/svg%3E");
+  --squiggle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 8'%3E%3Cpath d='M2 5c6-5 10 3 16-1s10 3 16-1 10 3 16-1 8 2 12 0' fill='none' stroke='%23d6a65f' stroke-width='1.600' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+html { overflow-x: clip; }
+body { background: radial-gradient(120% 80% at 50% 0%, #1a100b, var(--bg) 60%); }
+.grain { opacity: .08; }
+
+/* shared paper feel: soft grain over cream surfaces */
+.message .prose::after, .ucard::after, .paper-fx::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+  background-image: var(--noise); opacity: .16; mix-blend-mode: multiply;
+}
+
+/* ---------- Typography & small details ---------- */
+.h2 { font-weight: 400; letter-spacing: -.015em; }
+.eyebrow::after { content: ""; display: block; width: 64px; height: 8px; margin-top: .4rem; background: var(--squiggle) no-repeat; }
+.head--center .eyebrow::after { margin-inline: auto; }
+.head__hint { color: var(--rose); }
+
+/* ---------- Buttons: handwritten, thin-lined, warm ---------- */
+.btn {
+  font-family: var(--hand); font-size: 1.5rem; letter-spacing: .01em; font-weight: 500;
+  padding: .55rem 2rem; border-color: rgba(214, 166, 95, .6);
+}
+.btn:hover { background: var(--gold-soft); box-shadow: 0 10px 40px rgba(214, 166, 95, .18); }
+.btn--solid { background: var(--paper); color: var(--ink); border-color: var(--paper); box-shadow: 0 8px 30px rgba(0, 0, 0, .4); }
+.btn--solid:hover { background: #f7ead3; color: var(--ink); border-color: #f7ead3; }
+.intro { background: #070403; }
+
+/* =========================================================
+   HERO: a digital scrapbook collage
+   ========================================================= */
+.hero { background: radial-gradient(90% 70% at 50% 40%, #1f130d 0%, var(--bg) 72%); }
+.hero__name { font-style: italic; font-weight: 400; text-shadow: 0 0 60px rgba(219, 165, 143, .3), 0 4px 30px rgba(0, 0, 0, .6); }
+.hero__sub { position: relative; display: inline-block; }
+.hero__sub::after { content: ""; display: block; height: 8px; margin: .15rem auto 0; width: min(100%, 220px); background: var(--squiggle) center / contain no-repeat; opacity: .8; }
+.hero__inner::before {
+  content: ""; position: absolute; z-index: -1; inset: -14% -20%;
+  background: radial-gradient(closest-side, rgba(14, 9, 7, .8), rgba(14, 9, 7, .5) 60%, transparent);
+}
+
+.collage { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.pol {
+  position: absolute; margin: 0; width: var(--w); rotate: var(--r); translate: 0 var(--py, 0px);
+  padding: .5rem .5rem 1.8rem; background: var(--paper); border-radius: 2px; opacity: 0;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, .6), 0 2px 6px rgba(0, 0, 0, .4);
+}
+.pol img { width: 100%; aspect-ratio: var(--ar, 4 / 5); object-fit: cover; object-position: var(--op, 50% 20%); filter: saturate(.95) contrast(1.04) sepia(.1); }
+.pol .tape { position: absolute; top: -.75rem; left: 50%; translate: -50% 0; width: 4rem; height: 1.3rem; background: var(--tape); rotate: var(--tr, -4deg); }
+.pol:nth-of-type(even) .tape { background: var(--tape-rose); }
+body.is-open .pol { animation: polIn 1.6s var(--ease) both; animation-delay: calc(.5s + var(--i) * .24s); }
+@keyframes polIn { from { opacity: 0; transform: translateY(70px) scale(.92) rotate(6deg); } to { opacity: 1; transform: none; } }
+
+.pol--1 { --w: clamp(170px, 19vw, 300px); --r: -6deg; left: 5%; top: 12%; --op: 50% 30%; }
+.pol--2 { --w: clamp(140px, 15vw, 240px); --r: 5deg; right: 4%; top: 9%; --ar: 3 / 4; --op: 50% 35%; --tr: 5deg; }
+.pol--3 { --w: clamp(120px, 13vw, 210px); --r: 4deg; left: 13%; bottom: 7%; --op: 50% 15%; }
+.pol--4 { --w: clamp(150px, 16vw, 260px); --r: -5deg; right: 11%; bottom: 6%; --op: 50% 55%; }
+.pol--5 { --w: clamp(110px, 11vw, 170px); --r: 8deg; left: 29%; top: 4%; --ar: 1 / 1; --op: 50% 55%; }
+
+.doodle { position: absolute; width: var(--s, 34px); height: var(--s, 34px); color: var(--c, var(--rose)); opacity: .85; rotate: var(--r, 0deg); }
+.dd-1 { --s: 38px; --r: -12deg; left: 21%; top: 52%; }
+.dd-2 { --s: 30px; --c: var(--gold); --r: 10deg; right: 22%; top: 24%; }
+.dd-3 { --s: 70px; --c: var(--gold); width: 70px; height: 44px; left: 26%; bottom: 24%; rotate: -20deg; opacity: .7; }
+.dd-4 { --s: 24px; --c: var(--gold); right: 7%; bottom: 40%; }
+.dd-5 { --s: 24px; --r: 14deg; right: 30%; bottom: 9%; }
+
+@media (max-width: 700px) {
+  .hero { padding: 12rem var(--gutter) 13rem; }
+  .pol { padding: .38rem .38rem 1.3rem; }
+  .pol--1 { --w: 36vw; left: 3%; top: 4%; }
+  .pol--2 { --w: 30vw; right: 4%; top: 7%; }
+  .pol--3 { --w: 28vw; left: 5%; bottom: 17%; }
+  .pol--4 { --w: 33vw; right: 4%; bottom: 16%; }
+  .pol--5, .dd-3 { display: none; }
+  .dd-1 { left: 42%; top: 9%; --s: 28px; }
+  .dd-2 { right: 40%; top: 18%; --s: 22px; }
+  .dd-4 { right: 38%; bottom: 14%; }
+  .dd-5 { right: 46%; bottom: 20%; }
+  .hero__cue { bottom: calc(1rem + env(safe-area-inset-bottom)); }
+}
+
+/* =========================================================
+   MESSAGE: a handwritten-feeling paper note
+   ========================================================= */
+.message .prose {
+  position: relative; background: var(--paper); color: var(--ink); border-radius: 3px; rotate: -.7deg;
+  padding: clamp(1.8rem, 6vw, 3.2rem); box-shadow: 0 30px 70px rgba(0, 0, 0, .55);
+}
+.message .prose::before { content: ""; position: absolute; top: -14px; left: 50%; translate: -50% 0; width: 96px; height: 26px; background: var(--tape); rotate: -2deg; }
+.message .prose p { color: var(--ink); }
+.message .prose p.prose__kicker { color: var(--ink-rose); }
+.message .h2 { margin-bottom: .4rem; }
+
+/* =========================================================
+   PERSONALITY: pinned note cards
+   ========================================================= */
+.pcard { overflow: visible; border-radius: 6px; rotate: var(--cr, 0deg); background: linear-gradient(160deg, #2c1814, #1a100c 72%); border: 1px solid rgba(214, 166, 95, .22); box-shadow: 0 16px 34px rgba(0, 0, 0, .4); transition: border-color .6s var(--ease), background .6s var(--ease), transform .5s var(--ease), box-shadow .6s var(--ease), rotate .6s var(--ease); }
+.pcard::after { border-radius: inherit; }
+.pcard::before { content: ""; position: absolute; top: -9px; left: 1.4rem; width: 58px; height: 18px; background: var(--tape); rotate: -4deg; z-index: 2; }
+.pcard:nth-child(odd) { --cr: -1deg; }
+.pcard:nth-child(even) { --cr: .9deg; }
+.pcard:nth-child(even)::before { background: var(--tape-rose); left: auto; right: 1.6rem; rotate: 3deg; }
+.pcard:hover, .pcard.is-open { rotate: 0deg; }
+.pcard__title { color: var(--ivory); }
+.pcard__text { font-family: var(--hand); font-size: 1.5rem; line-height: 1.35; color: var(--rose); }
+.pdone { color: var(--gold); }
+
+/* =========================================================
+   EVIDENCE: the reels, mounted like instant photos
+   ========================================================= */
+.reel__stage {
+  width: fit-content; max-width: 100%; justify-self: center; padding: 14px 14px 62px;
+  background: var(--paper); border-radius: 3px; rotate: var(--sr, 0deg);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, .65), 0 0 100px rgba(214, 166, 95, .1);
+}
+.reel__stage::before { content: ""; position: absolute; top: -14px; left: 50%; translate: -50% 0; width: 104px; height: 28px; background: var(--tape); rotate: -3deg; z-index: 6; }
+.reel__stage::after {
+  position: absolute; bottom: 14px; left: 0; right: 0; text-align: center; rotate: -2deg;
+  font-family: var(--hand); font-size: 1.9rem; line-height: 1; color: var(--ink-rose);
+}
+.reel--a .reel__stage::after { content: "uwu ♡"; }
+.reel--b .reel__stage::after { content: "♡"; }
+.reel--b .reel__stage::before { background: var(--tape-rose); rotate: 3deg; }
+.reel__frame {
+  --fw: 420px; width: min(var(--fw), calc(100vw - var(--gutter) * 2 - 28px), calc(76svh * var(--ar)));
+  border-radius: 2px; box-shadow: 0 0 0 1px rgba(58, 36, 32, .55);
+}
+.reel.is-landscape .reel__frame { --fw: 760px; }
+.reel--b .reel__frame { border-radius: 2px; }
+.reel--b .reel__frame::after { border-radius: 0; inset: 10px; }
+.reel .reel__frame:fullscreen { width: 100vw !important; height: 100vh !important; border-radius: 0 !important; }
+.reel .reel__frame:-webkit-full-screen { width: 100vw !important; height: 100vh !important; border-radius: 0 !important; }
+@media (min-width: 900px) {
+  .reel--a .reel__frame, .reel--b .reel__frame { rotate: 0deg; }
+  .reel--a .reel__stage { --sr: -2deg; }
+  .reel--b .reel__stage { --sr: 1.8deg; }
+}
+.reel__big { border-color: rgba(243, 230, 208, .55); }
+.reel__label { font-weight: 500; }
+.bridge { color: var(--ivory); }
+.evidence__ps { color: var(--rose); }
+
+/* =========================================================
+   PHOTO DIARY: pinned polaroids
+   ========================================================= */
+.memory:nth-child(5n+1) { --rot: -2.4deg; }
+.memory:nth-child(5n+2) { --rot: 1.8deg; }
+.memory:nth-child(5n+3) { --rot: -.8deg; }
+.memory:nth-child(5n+4) { --rot: 2.5deg; }
+.memory:nth-child(5n+5) { --rot: -1.6deg; }
+.memory.reveal { filter: none; transform: translateY(54px) rotate(4deg); }
+.memory.reveal.in { transform: none; }
+.memory__card { background: var(--paper); padding: .6rem .6rem 1rem; box-shadow: 0 20px 44px rgba(0, 0, 0, .55), 0 2px 6px rgba(0, 0, 0, .35); }
+.memory__card:hover { z-index: 3; }
+.memory:nth-child(3n+2) .memory__card::before { background: var(--tape-rose); }
+.memory:nth-child(4n+3) .memory__card::before { width: 3.2rem; }
+.memory__img img { filter: saturate(.96) contrast(1.04) sepia(.1); }
+.memory__cap { color: var(--ink-rose); min-height: .4rem; }
+.memory:nth-child(4n+1) .memory__card::after {
+  content: ""; position: absolute; right: .9rem; bottom: .7rem; width: 22px; height: 20px; rotate: 10deg;
+  -webkit-mask: var(--heart-fill) center / contain no-repeat; mask: var(--heart-fill) center / contain no-repeat; background: var(--rose); opacity: .9;
+}
+@media (min-width: 900px) { .diary { columns: 3; column-gap: 2.4rem; } .memory:nth-child(3n+2) { margin-top: 2.2rem; } }
+.lb__media img { box-shadow: 0 30px 90px rgba(0, 0, 0, .7), 0 0 0 10px var(--paper); }
+.lb__cap { color: var(--rose); }
+
+/* =========================================================
+   STORY: a heart-pinned timeline
+   ========================================================= */
+.timeline__fill { background: linear-gradient(var(--gold), var(--rose)); }
+.tl__dot {
+  width: 20px; height: 18px; left: -3px; top: .5rem; border: 0; border-radius: 0; box-shadow: none !important;
+  background: rgba(214, 166, 95, .3);
+  -webkit-mask: var(--heart-fill) center / contain no-repeat; mask: var(--heart-fill) center / contain no-repeat;
+  transition: background .8s, transform .8s var(--ease);
+}
+.tl.in .tl__dot { background: var(--rose); transform: scale(1.15); }
+.tl__date { color: var(--gold); font-size: 1.55rem; }
+.tl__title { font-weight: 400; }
+@media (min-width: 860px) { .tl__dot { left: auto; right: -10px; } .tl:nth-of-type(even) .tl__dot { right: auto; left: -10px; } }
+
+/* =========================================================
+   QUIZ: a pinned question card
+   ========================================================= */
+.quiz__card { border-radius: 6px; rotate: -.4deg; background: linear-gradient(160deg, #2c1814, #1a100c 72%); border: 1px solid rgba(214, 166, 95, .25); }
+.quiz__card::before { content: ""; position: absolute; top: -12px; left: 50%; translate: -50% 0; width: 90px; height: 24px; background: var(--tape); rotate: 2deg; }
+.qopt { border-radius: 12px; border: 1px dashed rgba(214, 166, 95, .38); }
+.qopt:hover { border-style: solid; }
+.quiz__react, .quiz__count, .quiz__score { color: var(--rose); }
+
+/* =========================================================
+   UNSAID: torn paper notes
+   ========================================================= */
+.ucard { background: var(--paper); color: var(--ink); border: 0; border-radius: 2px; rotate: var(--ur, -.8deg); box-shadow: 0 22px 44px rgba(0, 0, 0, .45); }
+.ucard:nth-child(even) { --ur: .9deg; }
+.ucard:nth-child(3n) { --ur: -1.4deg; }
+.ucard::before { left: 50%; top: -11px; bottom: auto; width: 76px; height: 21px; translate: -50% 0; border-radius: 1px; background: var(--tape); opacity: 1; rotate: -3deg; }
+.ucard:nth-child(even)::before { background: var(--tape-rose); rotate: 3deg; }
+.ucard p { color: var(--ink); position: relative; z-index: 1; }
+.ucard:hover { background: #f5e8d1; border-color: transparent; }
+
+/* =========================================================
+   LETTER, FINALE, SECRET
+   ========================================================= */
+.paper::after { content: ""; position: absolute; top: -13px; left: 50%; translate: -50% 0; width: 100px; height: 26px; background: var(--tape); rotate: -2deg; }
+.paper { background: radial-gradient(120% 90% at 18% 0%, #f8ecd8 0%, #efe0c8 55%, #e3cfb0 100%); }
+.secret__card { border-radius: 6px; background: linear-gradient(160deg, #2c1814, #1a100c 72%); }
+.cl--love, .rv__b { color: var(--rose); }
+
+/* =========================================================
+   MUSIC: "♡ our song" dock
+   ========================================================= */
+.music { width: auto; height: 50px; padding: 0 1.05rem 0 .9rem; display: flex; align-items: center; gap: .55rem; border-radius: 999px; background: rgba(23, 16, 12, .78); border-color: rgba(214, 166, 95, .45); }
+.music__icon, .music__bars { order: 0; }
+.music__icon { width: 18px; height: 18px; fill: currentColor; stroke: none; }
+.music__icon--paused { stroke: currentColor; fill: none; }
+.music__label { order: 1; display: flex; align-items: center; gap: .4rem; font-family: var(--hand); font-size: 1.35rem; line-height: 1; color: var(--ivory); }
+.music__label b { font-weight: 500; }
+.music__heart { width: 15px; height: 14px; color: var(--rose); }
+.music[data-state="playing"] .music__heart { fill: currentColor; animation: beat 1.5s ease-in-out infinite; }
+@keyframes beat { 0%, 100% { scale: 1; } 14% { scale: 1.25; } 28% { scale: 1; } 42% { scale: 1.18; } }
+.music__bars { height: 16px; }
+.music__hint { right: calc(100% + 10px); }
+.music-mute {
+  position: fixed; z-index: 80; right: calc(1rem + env(safe-area-inset-right)); bottom: calc(4.4rem + env(safe-area-inset-bottom));
+  width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; color: var(--ivory);
+  background: rgba(23, 16, 12, .78); border: 1px solid rgba(214, 166, 95, .35);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); transition: border-color .3s, background .3s;
+}
+.music-mute:hover { border-color: var(--gold); }
+.music-mute svg { width: 18px; height: 18px; }
+.music-mute .mm-off, .music-mute.is-off .mm-on { display: none; }
+.music-mute.is-off .mm-off { display: block; }
+body:not(.is-open) .music-mute, .music[data-state="idle"] ~ .music-mute { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reel__stage, .pcard, .ucard, .quiz__card, .message .prose { rotate: 0deg; }
+  .pol { opacity: 1; animation: none !important; }
+  .music__heart { animation: none !important; }
+}
